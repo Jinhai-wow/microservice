@@ -1,0 +1,59 @@
+server:
+  port: 1015
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:admin@127.0.0.1:1025/eureka/
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: common-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: url_proxy
+          uri: https://www.csdn.net/
+          predicates:
+            - Path=/csdn/**
+        - id: eureka-client
+          uri: lb://eureka-client
+          predicates:
+            - Path=/gateway/**
+
+# hystrix If you need to use ThreadLocal bound variables in your RequestInterceptor`s
+# you will need to either set the thread isolation strategy for Hystrix to `SEMAPHORE or disable Hystrix in Feign.
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 600000
+          semaphore:
+            maxConcurrentRequests: 1000
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 200
+      circuitBreaker:
+        requestVolumeThreshold: 5000
+  shareSecurityContext: true
+
+#负载均衡配置
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+

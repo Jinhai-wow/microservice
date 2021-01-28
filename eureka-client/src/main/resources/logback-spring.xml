@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="false">
+	<springProperty scop="context" name="spring.application.name" source="spring.application.name" defaultValue=""/>
+	<springProperty scop="context" name="elasticsearch.log.url" source="elasticsearch.log.url" defaultValue=""/>
+	<springProperty scop="context" name="logstash.url" source="logstash.url" defaultValue=""/>
+	<property name="log.path" value="logs/${spring.application.name}" />
+	<!-- 彩色日志格式 -->
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx"
+					converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<!--自定义规则-->
+	<conversionRule conversionWord="ip" converterClass="com.jinhai.microservice.commoncore.config.LogIpConfig" />
+	<!-- Console log output -->
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Log file debug output -->
+	<appender name="debug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/debug.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/%d{yyyy-MM}/debug.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxFileSize>50MB</maxFileSize>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date %ip [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<!-- Log file error output -->
+	<appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${log.path}/error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${log.path}/%d{yyyy-MM}/error.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+			<maxFileSize>50MB</maxFileSize>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n</pattern>
+		</encoder>
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+	</appender>
+
+	<!-- elasticsearch appender http://172.16.105.40:9200/_bulk-->
+	<appender name="ELASTIC" class="com.internetitem.logback.elasticsearch.ElasticsearchAppender">
+		<url>${elasticsearch.log.url}</url>
+		<index>elasticsearch-logs-test-%date{yyyy-MM-dd}</index>
+		<type>tester</type>
+		<loggerName>es-logger</loggerName> <!-- optional -->
+		<errorLoggerName>es-error-logger</errorLoggerName> <!-- optional -->
+		<connectTimeout>30000</connectTimeout> <!-- optional (in ms, default 30000) -->
+		<errorsToStderr>false</errorsToStderr> <!-- optional (default false) -->
+		<includeCallerData>false</includeCallerData> <!-- optional (default false) -->
+		<logsToStderr>false</logsToStderr> <!-- optional (default false) -->
+		<maxQueueSize>104857600</maxQueueSize> <!-- optional (default 104857600) -->
+		<maxRetries>3</maxRetries> <!-- optional (default 3) -->
+		<readTimeout>30000</readTimeout> <!-- optional (in ms, default 30000) -->
+		<sleepTime>250</sleepTime> <!-- optional (in ms, default 250) -->
+		<rawJsonMessage>false</rawJsonMessage> <!-- optional (default false) -->
+		<includeMdc>false</includeMdc> <!-- optional (default false) -->
+		<maxMessageSize>10000</maxMessageSize> <!-- optional (default -1 -->
+		<authentication class="com.internetitem.logback.elasticsearch.config.BasicAuthentication"/> <!-- optional -->
+		<properties>
+			<property>
+				<name>host</name>
+				<value>%ip</value>
+				<allowEmpty>false</allowEmpty>
+			</property>
+			<property>
+				<name>traceId</name>
+				<value>%X{traceId}</value>
+			</property>
+			<property>
+				<name>severity</name>
+				<value>%level</value>
+			</property>
+			<property>
+				<name>thread</name>
+				<value>%thread</value>
+			</property>
+			<property>
+				<name>stacktrace</name>
+				<value>%ex</value>
+			</property>
+			<property>
+				<name>logger</name>
+				<value>%logger</value>
+			</property>
+		</properties>
+		<headers>
+			<header>
+				<name>Content-Type</name>
+				<value>application/json</value>
+			</header>
+		</headers>
+	</appender>
+
+	<!-- 为logstash输出的JSON格式的Appender https://github.com/logstash/logstash-logback-encoder#tcp-appenders-->
+	<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+		<destination>${logstash.url}</destination>
+		<!-- 日志输出编码 -->
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+			<!-- 此处配置logstash的索引名称,在logstash.conf中配置了使用appname作为索引名称的一部分 -->
+			<!--<customFields>{"appname":""}</customFields>-->
+			<providers>
+				<pattern>
+					<omitEmptyFields>false</omitEmptyFields>
+					<pattern>
+						{
+						"level": "%level",
+						"ip": "%ip",
+						"trace": "%X{traceId}",
+						"service": "${spring.application.name}",
+						"thread": "%thread",
+						"class": "%logger",
+						"message": "%message",
+						"time": "%d{yyyy-MM-dd HH:mm:ss.SSS}"
+						}
+					</pattern>
+				</pattern>
+			</providers>
+		</encoder>
+	</appender>
+
+	<!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
+	<root level="INFO">
+		<appender-ref ref="console" />
+		<!--<appender-ref ref="debug" />-->
+		<!--<appender-ref ref="error" />-->
+		<appender-ref ref="LOGSTASH" />
+	</root>
+</configuration>

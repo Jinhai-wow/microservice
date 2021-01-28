@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: '@profile.active@'
+
+logging:
+  level:
+    root: info
+  config: classpath:logback-spring.xml
+

@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: '@profile.active@'
+
+logging:
+  level:
+    com.jinhai.microservice.eurekaclient2.mapper: debug
+  config: classpath:logback-spring.xml
+

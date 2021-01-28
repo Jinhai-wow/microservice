@@ -1,0 +1,118 @@
+server:
+  port: 1105
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: oauth2
+  redis:
+    host: ip
+    port: 6379
+    password: psw
+    timeout: 1000
+    pool:
+      #连接池最大连接数（使用负值表示没有限制）
+      max-active: -1
+      #连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+      # 连接池中的最大空闲连接
+      max-idle: 10
+      min-idle: 0
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: bdc
+    password: Root123@
+    jdbc-url: jdbc:mysql://192.168.100.150:3306/bdc_ywk?characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: gxHikari
+      connection-timeout: 30000
+      connection-test-query: SELECT 1 FROM　DUAL
+  freemarker:
+    allow-request-override: false
+    allow-session-override: false
+    cache: true
+    charset: UTF-8
+    check-template-location: true
+    content-type: text/html
+    enabled: true
+    expose-request-attributes: false
+    expose-session-attributes: false
+    expose-spring-macro-helpers: true
+    prefer-file-system-access: true
+    suffix: .ftl
+    template-loader-path: classpath:/templates/
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:admin@127.0.0.1:1025/eureka/
+
+# feign 配置
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 120000
+    default-config:
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+# hystrix If you need to use ThreadLocal bound variables in your RequestInterceptor`s
+# you will need to either set the thread isolation strategy for Hystrix to `SEMAPHORE or disable Hystrix in Feign.
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 600000
+          semaphore:
+            maxConcurrentRequests: 1000
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 200
+      circuitBreaker:
+        requestVolumeThreshold: 5000
+  shareSecurityContext: true
+
+#负载均衡配置
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
+## spring security 配置
+security:
+  oauth2:
+    client:
+      # 默认放行url,如果子模块重写这里的配置就会被覆盖
+      ignore-urls:
+        - /actuator/**
+        - /v2/api-docs
+        - /test/**
+        - /token/**
+    resource:
+      loadBalanced: true
+      token-info-uri: http://oauth2:1105/oauth/check_token
+

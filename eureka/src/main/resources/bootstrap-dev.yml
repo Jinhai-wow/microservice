@@ -1,0 +1,39 @@
+server:
+  port: 1025
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    user:
+      name: admin
+      password: admin
+  application:
+    name: eureka-server
+
+eureka:
+  instance:
+    hostname: eureka-server
+    prefer-ip-address: true
+  client:
+    #是否向服务中心注册自己（服务端为false）
+    register-with-eureka: false
+    #是否检索服务
+    fetch-registry: false
+    service-url:
+      defaultZone: http://admin:admin@localhost:${server.port}/eureka/
+  server:
+    # 设置清理间隔,单位为毫秒,默认为0
+    eviction-interval-timer-in-ms: 4000
+    # 关闭自我保护模式
+    enable-self-preservation: false
+    renewal-percent-threshold: 0.9
+
+#手动刷新配置用
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+    refresh:
+        enabled: true

@@ -1,0 +1,44 @@
+2020-10-22 10:27:49,201 192.168.50.1 [background-preinit] INFO  [org.hibernate.validator.internal.util.Version] Version.java:21 - HV000001: Hibernate Validator 6.1.5.Final
+2020-10-22 10:27:51,672 192.168.50.1 [main] INFO  [c.j.m.rabbitmqconsumer.RabbitmqConsumerApplication] SpringApplication.java:655 - The following profiles are active: dev
+2020-10-22 10:27:54,005 192.168.50.1 [main] INFO  [o.springframework.cloud.context.scope.GenericScope] GenericScope.java:295 - BeanFactory id=69e3c2f1-88dc-3c05-878a-15a147d78d38
+2020-10-22 10:27:54,788 192.168.50.1 [main] WARN  [io.undertow.websockets.jsr] Bootstrap.java:68 - UT026010: Buffer pool was not set on WebSocketDeploymentInfo, the default pool will be used
+2020-10-22 10:27:54,844 192.168.50.1 [main] INFO  [io.undertow.servlet] ServletContextImpl.java:364 - Initializing Spring embedded WebApplicationContext
+2020-10-22 10:27:54,848 192.168.50.1 [main] INFO  [o.s.b.w.s.c.ServletWebServerApplicationContext] ServletWebServerApplicationContext.java:285 - Root WebApplicationContext: initialization completed in 3138 ms
+2020-10-22 10:27:56,188 192.168.50.1 [main] WARN  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:121 - No URLs will be polled as dynamic configuration sources.
+2020-10-22 10:27:56,189 192.168.50.1 [main] INFO  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:122 - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-10-22 10:27:56,204 192.168.50.1 [main] WARN  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:121 - No URLs will be polled as dynamic configuration sources.
+2020-10-22 10:27:56,205 192.168.50.1 [main] INFO  [com.netflix.config.sources.URLConfigurationSource] URLConfigurationSource.java:122 - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-10-22 10:27:56,782 192.168.50.1 [main] INFO  [o.s.scheduling.concurrent.ThreadPoolTaskExecutor] ExecutorConfigurationSupport.java:181 - Initializing ExecutorService 'applicationTaskExecutor'
+2020-10-22 10:27:58,737 192.168.50.1 [main] INFO  [o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration] DiscoveryClientOptionalArgsConfiguration.java:78 - Eureka HTTP Client uses Jersey
+2020-10-22 10:28:00,695 192.168.50.1 [main] WARN  [o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger] BlockingLoadBalancerClientAutoConfiguration.java:86 - You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2020-10-22 10:28:00,810 192.168.50.1 [main] INFO  [o.s.cloud.netflix.eureka.InstanceInfoFactory] InstanceInfoFactory.java:72 - Setting initial instance status as: STARTING
+2020-10-22 10:28:00,874 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:371 - Initializing Eureka in region us-east-1
+2020-10-22 10:28:01,007 192.168.50.1 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:70 - Using JSON encoding codec LegacyJacksonJson
+2020-10-22 10:28:01,008 192.168.50.1 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:71 - Using JSON decoding codec LegacyJacksonJson
+2020-10-22 10:28:01,225 192.168.50.1 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:80 - Using XML encoding codec XStreamXml
+2020-10-22 10:28:01,226 192.168.50.1 [main] INFO  [c.n.discovery.provider.DiscoveryJerseyProvider] DiscoveryJerseyProvider.java:81 - Using XML decoding codec XStreamXml
+2020-10-22 10:28:01,632 192.168.50.1 [main] INFO  [c.n.d.shared.resolver.aws.ConfigClusterResolver] ConfigClusterResolver.java:43 - Resolving eureka endpoints via configuration
+2020-10-22 10:28:02,913 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1004 - Disable delta property : false
+2020-10-22 10:28:02,914 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1005 - Single vip registry refresh property : null
+2020-10-22 10:28:02,915 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1006 - Force full registry fetch : false
+2020-10-22 10:28:02,916 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1007 - Application is null : false
+2020-10-22 10:28:02,916 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1008 - Registered Applications size is zero : true
+2020-10-22 10:28:02,917 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1010 - Application version is -1: true
+2020-10-22 10:28:02,917 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1093 - Getting all instance registry info from the eureka server
+2020-10-22 10:28:03,402 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1102 - The response status is 200
+2020-10-22 10:28:03,409 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1317 - Starting heartbeat executor: renew interval is: 30
+2020-10-22 10:28:03,415 192.168.50.1 [main] INFO  [com.netflix.discovery.InstanceInfoReplicator] InstanceInfoReplicator.java:60 - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2020-10-22 10:28:03,422 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:491 - Discovery Client initialized at timestamp 1603333683420 with initial instances count: 3
+2020-10-22 10:28:03,425 192.168.50.1 [main] INFO  [o.s.c.n.e.serviceregistry.EurekaServiceRegistry] EurekaServiceRegistry.java:41 - Registering application RABBITMQ-CONSUMER with eureka with status UP
+2020-10-22 10:28:03,427 192.168.50.1 [main] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:1353 - Saw local status change event StatusChangeEvent [timestamp=1603333683427, current=UP, previous=STARTING]
+2020-10-22 10:28:03,432 192.168.50.1 [DiscoveryClient-InstanceInfoReplicator-0] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:870 - DiscoveryClient_RABBITMQ-CONSUMER/JINHAI:rabbitmq-consumer:1065: registering service...
+2020-10-22 10:28:03,451 192.168.50.1 [main] INFO  [io.undertow] Undertow.java:117 - starting server: Undertow - 2.1.4.Final
+2020-10-22 10:28:03,473 192.168.50.1 [main] INFO  [org.xnio] Xnio.java:95 - XNIO version 3.8.0.Final
+2020-10-22 10:28:03,495 192.168.50.1 [main] INFO  [org.xnio.nio] NioXnio.java:59 - XNIO NIO Implementation Version 3.8.0.Final
+2020-10-22 10:28:03,511 192.168.50.1 [DiscoveryClient-InstanceInfoReplicator-0] INFO  [com.netflix.discovery.DiscoveryClient] DiscoveryClient.java:879 - DiscoveryClient_RABBITMQ-CONSUMER/JINHAI:rabbitmq-consumer:1065 - registration status: 204
+2020-10-22 10:28:03,579 192.168.50.1 [main] INFO  [org.jboss.threads] Version.java:52 - JBoss Threads version 3.1.0.Final
+2020-10-22 10:28:03,649 192.168.50.1 [main] INFO  [o.s.boot.web.embedded.undertow.UndertowWebServer] UndertowWebServer.java:133 - Undertow started on port(s) 1065 (http)
+2020-10-22 10:28:03,652 192.168.50.1 [main] INFO  [o.s.c.n.e.s.EurekaAutoServiceRegistration] EurekaAutoServiceRegistration.java:145 - Updating port to 1065
+2020-10-22 10:28:05,378 192.168.50.1 [main] INFO  [o.s.a.rabbit.connection.CachingConnectionFactory] AbstractConnectionFactory.java:558 - Attempting to connect to: [127.0.0.1:5672]
+2020-10-22 10:28:05,478 192.168.50.1 [main] INFO  [o.s.a.rabbit.connection.CachingConnectionFactory] AbstractConnectionFactory.java:511 - Created new connection: rabbitConnectionFactory#51e754e1:0/SimpleConnection@6d13cd6d [delegate=amqp://guest@127.0.0.1:5672/, localPort= 58141]
+2020-10-22 10:28:05,577 192.168.50.1 [main] INFO  [c.j.m.rabbitmqconsumer.RabbitmqConsumerApplication] StartupInfoLogger.java:61 - Started RabbitmqConsumerApplication in 18.864 seconds (JVM running for 23.638)

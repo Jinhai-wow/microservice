@@ -1,0 +1,33 @@
+server:
+  port: 1065
+
+spring:
+  application:
+    name: rabbitmq-consumer
+  main:
+    allow-bean-definition-overriding: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
+rabbit:
+  log:
+    queue: ribbit-log-queue
+    exchange: rabbit-log-exchange
+    prefetch-count: 1
+    concurrent-consumers: 2
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:admin@127.0.0.1:1025/eureka/
+
+#负载均衡配置
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000

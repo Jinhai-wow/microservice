@@ -1,0 +1,111 @@
+server:
+  port: 1035
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  security:
+    user:
+      name: admin
+      password: admin
+  application:
+    name: eureka-client
+  redis:
+    host: ip
+    port: 6379
+    password: psw
+    timeout: 1000
+    pool:
+      #连接池最大连接数（使用负值表示没有限制）
+      max-active:
+       连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1
+      # 连接池中的最大空闲连接
+      max-idle: 10
+      min-idle: 0
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@192.168.100.150:1521/gdredb
+    username: BDC_GX
+    password: BDC_gx189
+    hikari:
+      minimum-idle: 5
+      idle-timeout: 180000
+      maximum-pool-size: 10
+      auto-commit: true
+      pool-name: gxHikari
+      connection-timeout: 30000
+      connection-test-query: SELECT 1 FROM　DUAL
+
+mybatis-plus:
+  # MyBatis Mapper所对应的XML文件位置
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  global-config:
+    # 关闭MP3.0自带的banner
+    banner: false
+    db-config:
+      # 主键类型 0:数据库ID自增 1.未定义 2.用户输入 3 id_worker 4.uuid 5.id_worker字符串表示
+      id-type: uuid
+      #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
+      field-strategy: not_null
+      # 默认数据库表下划线命名
+      table-underline: true
+  # 开启驼峰命名
+  configuration:
+    map-underscore-to-camel-case: true
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://admin:admin@eureka-server:1025/eureka/
+
+# feign 配置
+feign:
+  hystrix:
+    enabled: true
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 60000
+        readTimeout: 60000
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+#熔断器配置
+# hystrix If you need to use ThreadLocal bound variables in your RequestInterceptor`s
+# you will need to either set the thread isolation strategy for Hystrix to `SEMAPHORE or disable Hystrix in Feign.
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          strategy: SEMAPHORE
+          thread:
+            timeoutInMilliseconds: 6000000
+          semaphore:
+            maxConcurrentRequests: 1000
+      fallback:
+        isolation:
+          semaphore:
+            maxConcurrentRequests: 200
+      circuitBreaker:
+        requestVolumeThreshold: 5000
+  shareSecurityContext: true
+
+#负载均衡配置
+#请求处理的超时时间
+ribbon:
+  ReadTimeout: 60000
+  ConnectTimeout: 60000
+
